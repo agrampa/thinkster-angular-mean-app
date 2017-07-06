@@ -14,6 +14,8 @@ function($scope){
   ];
 
   $scope.addPost = function() {
-    $scope.posts.push({title: 'A new post!', upvotes: 4});
+    if($scope.title === '') return; // makes sure title is entered, instead of adding a blank post
+    $scope.posts.push({title: $scope.title, upvotes: 4});
+    $scope.title = '';  // clears out after the submit button is clicked
   };
 }]);
