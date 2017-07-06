@@ -13,11 +13,7 @@ function($scope){
     {title: 'post 5', upvotes: 4}
   ];
 
-  // $scope.posts = [
-  //   'post 1',
-  //   'post 2',
-  //   'post 3',
-  //   'post 4',
-  //   'post 5'
-  // ];
+  $scope.addPost = function() {
+    $scope.posts.push({title: 'A new post!', upvotes: 4});
+  };
 }]);
