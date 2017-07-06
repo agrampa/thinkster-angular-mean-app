@@ -18,4 +18,8 @@ function($scope){
     $scope.posts.push({title: $scope.title, upvotes: 4});
     $scope.title = '';  // clears out after the submit button is clicked
   };
+
+  $scope.incrementUpvotes = function(post) {
+    post.upvotes += 1;
+  };
 }]);
