@@ -10,13 +10,19 @@ angular.module('flapperNews', ['ui.router'])
         url: '/home',
         templateUrl:'/home.html',
         controller: 'MainCtrl'
-    });
+    })
+      .state('posts', {
+        url:'/posts/{id}',
+        templateUrl: '/posts.html',
+        controller: 'PostsCtrl'
+      });
+
     $urlProvider.otherwise('home');
   }
 ])
 .factory('posts', [function(){ // use lower camelCase
   let o = {
-    posts: [{title: 'hello', link: '', upvotes: 0}]  // now posts are available to all parts of the site
+    posts: []  // now posts are available to all parts of the site
   };
   return o;
 }])
@@ -33,7 +39,11 @@ function($scope, posts){
     $scope.posts.push({
       title: $scope.title,
       link: $scope.link,
-      upvotes: 4
+      upvotes: 0,
+      comments: [
+        {author: 'User 1', body: 'Cool Post!', upvotes: 0},
+        {author: 'User 2', body: 'Not cool', upvotes: 0}
+      ]
     });
     $scope.title = '';  // clears out after the submit button is clicked
     $scope.link = '';
@@ -42,4 +52,12 @@ function($scope, posts){
   $scope.incrementUpvotes = function(post) {
     post.upvotes += 1;
   };
-}]);
+}])
+.controller('PostsCtrl', [
+  '$scope',
+  '$stateParams',
+  'posts',
+  function($scope, $stateParams, posts) {
+    $scope.post = posts.posts[$stateParams.id];
+  }
+]);
