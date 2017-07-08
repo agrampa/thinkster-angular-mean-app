@@ -59,5 +59,16 @@ function($scope, posts){
   'posts',
   function($scope, $stateParams, posts) {
     $scope.post = posts.posts[$stateParams.id];
+
+    $scope.addCommend = function() {
+      if($scope.body === '') return; // makes sure title is entered, instead of adding a blank post
+      $scope.post.comments.push({
+        body: $scope.body,
+        author: 'user',
+        upvotes: 0,
+
+      });
+      $scope.body = '';
+    };
   }
 ]);
