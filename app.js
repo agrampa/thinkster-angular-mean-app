@@ -1,17 +1,32 @@
-var app = angular.module('flapperNews', []);
+'use strict';
 
-app.controller('MainCtrl', [
+angular.module('flapperNews', ['ui.router'])
+.config([
+  '$stateProvider',
+  '$urlProvider',
+  function($stateProvider, $urlProvider){
+    $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl:'/home.html',
+        controller: 'MainCtrl'
+    });
+    $urlProvider.otherwise('home');
+  }
+])
+.factory('posts', [function(){ // use lower camelCase
+  let o = {
+    posts: [{title: 'hello', link: '', upvotes: 0}]  // now posts are available to all parts of the site
+  };
+  return o;
+}])
+.controller('MainCtrl', [
 '$scope',
-function($scope){
+'posts',
+function($scope, posts){
   $scope.test = 'Hello world!';
 
-  $scope.posts = [
-    {title: 'post 1', upvotes: 5},
-    {title: 'post 2', upvotes: 2},
-    {title: 'post 3', upvotes: 15},
-    {title: 'post 4', upvotes: 9},
-    {title: 'post 5', upvotes: 4}
-  ];
+  $scope.posts = posts.posts;
 
   $scope.addPost = function() {
     if($scope.title === '') return; // makes sure title is entered, instead of adding a blank post
